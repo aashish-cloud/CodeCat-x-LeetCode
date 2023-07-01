@@ -1,13 +1,16 @@
 class Solution {
 public:
     vector<int> shuffle(vector<int>& nums, int n) {
-        vector<int> ans;
-        
         for(int i = 0; i < n; i++) {
-            ans.push_back(nums[i]);
-            ans.push_back(nums[n + i]);
+            int pair = nums[i] << 10;
+            nums[i] = pair | nums[n + i];
         }
 
-        return ans;
+        for(int i = n - 1; i >= 0; i--) {
+            nums[2 * i + 1] = nums[i] & 1023;
+            nums[2 * i] = nums[i] >> 10;
+        }
+
+        return nums;
     }
 };
