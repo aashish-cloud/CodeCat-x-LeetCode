@@ -6,10 +6,6 @@ public:
         for(int n : nums)
             m[n]++;
         
-        for(auto it : m)
-            if(it.second > 1)
-                return true;
-
-        return false; 
+        return nums.size() > m.size(); 
     }
 };
