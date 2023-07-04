@@ -11,7 +11,7 @@ public:
                 nums[j] >>= 1;
             }
 
-            ans += (currBits % 3)*pow(2, i);
+            ans |= (currBits % 3) << i;
         }
 
         return ans;
