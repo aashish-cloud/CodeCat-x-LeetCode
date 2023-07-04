@@ -1,26 +1,19 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        vector<int> bit_cnt(32);
-        for(int i = 0; i < nums.size(); i++) {
-            int n = nums[i];
-            int j = 31;
-            
-            while(n && j >= 0) {
-                if(n & 1) bit_cnt[j] += 1;
-                n = n >> 1;
-                j--;
+        long ans = 0;
+
+        for(int i = 0; i < 32; i++) {
+            int currBits = 0;
+
+            for(int j = 0; j < nums.size(); j++) {
+                currBits += (nums[j] & 1);
+                nums[j] >>= 1;
             }
+
+            ans += (currBits % 3)*pow(2, i);
         }
 
-        long long base = 1;
-        int dec = 0;
-        for(int i = 31; i >= 0; i--) {
-            if(bit_cnt[i])
-                dec += (bit_cnt[i] % 3) * base;
-            base *= 2;
-        }
-
-        return dec;
+        return ans;
     }
 };
