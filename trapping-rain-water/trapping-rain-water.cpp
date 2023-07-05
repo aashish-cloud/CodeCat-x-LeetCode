@@ -7,29 +7,23 @@ public:
             return 0;
         
         vector<int> maxToRight(n, 0);
-        vector<int> maxToLeft(n, 0);  
+        vector<int> maxToLeft(n, 0); 
+
+        maxToLeft[0] = height[0];
+        maxToRight[n - 1] = height[n - 1]; 
 
         for(int i = n - 2; i >= 0; i--) {
-            maxToRight[i] = max(height[i + 1], maxToRight[i + 1]);
+            maxToRight[i] = max(height[i], maxToRight[i + 1]);
         }
 
         for(int i = 1; i < n; i++) {
-            maxToLeft[i] = max(height[i - 1], maxToLeft[i - 1]);
+            maxToLeft[i] = max(height[i], maxToLeft[i - 1]);
         }
 
-        int water = 0, maxR = 0, maxL = 0;
+        int water = 0;
 
         for(int i = 0; i < n; i++) {
-            if(maxToRight[i] < height[i])
-                maxR = 0;
-            else if(maxToLeft[i] < height[i])
-                maxL = 0;
-            else {
-                maxL = maxToLeft[i];
-                maxR = maxToRight[i];
-            }
-
-            water += max(min(maxL, maxR) - height[i], 0);
+            water += min(maxToLeft[i], maxToRight[i]) - height[i];
         }  
 
         return water;
