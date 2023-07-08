@@ -1,21 +1,32 @@
 class Solution {
 public:
     int maxConsecutiveAnswers(string answerKey, int k) {
-        int maxFreq = 0;
-        int i = 0;
-        unordered_map<char, int> charCount;
+            int maxi = 0;
+            int n = answerKey.size();
+            int cnt = k;
 
-        for (int j = 0; j < answerKey.length(); j++) {
-            char currentChar = answerKey[j];
-            charCount[currentChar]++;
-            maxFreq = max(maxFreq, charCount[currentChar]);
-
-            if (j - i + 1 > maxFreq + k) {
-                charCount[answerKey[i]]--;
-                i++;
+            for(int left = 0, right = 0; right < n; right++) {
+                if(answerKey[right] == 'F') cnt--;
+                while(cnt < 0) {
+                    if(answerKey[left] == 'F')
+                        cnt++;
+                    left++;
+                }   
+                maxi = max(maxi, right - left + 1);
             }
-        }
 
-        return answerKey.length() - i;
+            cnt = k;
+
+            for(int left = 0, right = 0; right < n; right++) {
+                if(answerKey[right] == 'T') cnt--;
+                while(cnt < 0) {
+                    if(answerKey[left] == 'T')
+                        cnt++;
+                    left++;
+                }
+                maxi = max(maxi, right - left + 1);
+            }
+
+            return maxi;
     }
 };
