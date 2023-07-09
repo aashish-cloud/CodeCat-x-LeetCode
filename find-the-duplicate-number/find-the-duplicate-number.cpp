@@ -1,15 +1,21 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        for(int i = 0; i < nums.size(); i++) {
-            int j = abs(nums[i]) - 1;
+        int hare = nums[0];
+        int tortoise = nums[0];
 
-            if(nums[j] < 0)
-                return abs(nums[i]);
-            else
-                nums[j] = -1*nums[j];
+        do {
+            hare = nums[nums[hare]];
+            tortoise = nums[tortoise];
+        } while(hare != tortoise);
+
+        hare = nums[0];
+
+        while(hare != tortoise) {
+            hare = nums[hare];
+            tortoise = nums[tortoise];
         }
 
-        return 0;
+        return hare;
     }
 };
