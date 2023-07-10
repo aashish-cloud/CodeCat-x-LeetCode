@@ -3,14 +3,17 @@ public:
     bool canBeEqual(vector<int>& target, vector<int>& arr) {
         int n = target.size();
 
-        map<char, int> m_arr;
-        map<char, int> m_tar;
+        int bucket[1001] = {0}; 
 
         for(int i = 0; i < n; i++) {
-            m_arr[arr[i]]++;
-            m_tar[target[i]]++;
+            bucket[arr[i]]++;
+            bucket[target[i]]--;
         }
 
-        return m_arr == m_tar ? true : false;    
+        for(int cnt : bucket)
+            if(cnt > 0)
+                return false;
+
+        return true;
     }
 };
