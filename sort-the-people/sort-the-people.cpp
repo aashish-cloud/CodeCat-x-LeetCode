@@ -1,24 +1,17 @@
 class Solution {
 public:
     vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
-        bool swapped = false;
-        int n = names.size();
+        vector<int> bucket(100001, -1);
 
-        for(int i = 0; i < n; i++) {
-            swapped = false;
+        for(int i = 0; i < heights.size(); i++)
+            bucket[heights[i]] = i;
+        
+        vector<string> ans;
 
-            for(int j = 0; j < n - 1; j++) {
-                if(heights[j] < heights[j + 1]) {
-                    swap(heights[j], heights[j + 1]);
-                    swap(names[j], names[j + 1]);
-                    swapped = true;
-                }
-            }
+        for(int i = 100000; i >= 1; i--)
+            if(bucket[i] > -1)
+                ans.push_back(names[bucket[i]]);
 
-            if(!swapped)
-                break;
-        }
-
-        return names;
+        return ans;
     }
 };
