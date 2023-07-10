@@ -17,19 +17,11 @@ public:
         int left = minDepth(root->left);
         int right = minDepth(root->right);
 
-        if(left == 0) {
-            if(right == 0)
-                return 1;
-            else
-                return right + 1;
-        }
+        if(left == 0)
+            return right + 1;
 
-        if(right == 0) {
-            if(left == 0)
-                return 1;
-            else
-                return left + 1;
-        }
+        if(right == 0)
+            return left + 1;
 
         return min(left, right) + 1;
     }
