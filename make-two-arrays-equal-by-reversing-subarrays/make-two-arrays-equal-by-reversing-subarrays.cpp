@@ -3,21 +3,14 @@ public:
     bool canBeEqual(vector<int>& target, vector<int>& arr) {
         int n = target.size();
 
-        for(int i = 0; i < n; i++) {
-            int key = target[i];
-            bool found = false;
-            
-            for(int j = i; j < n; j++) {
-                if(arr[j] == key) {
-                    reverse(arr.begin() + i, arr.begin() + j + 1);
-                    found = true;
-                }
-            }
+        map<char, int> m_arr;
+        map<char, int> m_tar;
 
-            if(!found)
-                return false;
+        for(int i = 0; i < n; i++) {
+            m_arr[arr[i]]++;
+            m_tar[target[i]]++;
         }
 
-        return true;    
+        return m_arr == m_tar ? true : false;    
     }
 };
