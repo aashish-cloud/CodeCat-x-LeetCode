@@ -9,26 +9,21 @@
  */
 class Solution {
 public:
-    int distanceTarget(TreeNode* root, TreeNode* target, vector<TreeNode*> &parents) {
+    bool findParents(TreeNode* root, TreeNode* target, vector<TreeNode*> &parents) {
         if(root == NULL)
-            return 0;
+            return false;
 
         if(root == target)
-            return 1; 
+            return true; 
         
         parents.push_back(root);
         
-        int left_dis = distanceTarget(root->left, target, parents);
-        
-        if(left_dis)    return left_dis + 1;
-        
-        int right_dis = distanceTarget(root->right, target, parents);
+        if(findParents(root->left, target, parents))    return true;
+        if(findParents(root->right, target, parents))   return true;
 
-        if(right_dis)   return right_dis + 1;
-    
         parents.pop_back();
 
-        return 0;
+        return false;
     }
 
     bool findTarget(TreeNode* root, TreeNode* target) {
@@ -54,7 +49,6 @@ public:
 
         findK(root->left, ans, dis, cnt + 1);
         findK(root->right, ans, dis, cnt + 1);        
-
     }
 
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
@@ -62,18 +56,18 @@ public:
         findK(target, ans, k, 0);
 
         vector<TreeNode*> parents;
-        distanceTarget(root, target, parents);
+        findParents(root, target, parents);
         
         int n = parents.size();
         for(int i = n - 1; i >= 0; i--) {
-            int level = k - (n - i); 
+            int rem_lvl = k - (n - i); 
             
-            if(level > 0) {
+            if(rem_lvl > 0) {
                 findTarget(parents[i]->left, target) ? findK(parents[i]->right, ans, k, n - i + 1) :
                 findK(parents[i]->left, ans, k, n - i + 1);
             }
 
-            if(level == 0) {
+            if(rem_lvl == 0) {
                 ans.push_back(parents[i]->val);
                 break;
             }
