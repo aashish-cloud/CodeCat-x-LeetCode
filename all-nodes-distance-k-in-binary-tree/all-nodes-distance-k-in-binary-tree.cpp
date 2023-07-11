@@ -47,12 +47,8 @@ public:
     void findK(TreeNode* root, vector<int> &ans, int dis, int cnt) {
         if(root == NULL)    return;
 
-        // if(cnt > dis)
-        //     return;
-
         if(cnt == dis) {
-            // if(root->val != target) 
-                ans.push_back(root->val);
+            ans.push_back(root->val);
             return;
         }
 
@@ -63,52 +59,11 @@ public:
 
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         vector<int> ans;
-        queue<TreeNode*> q;
-        q.push(target);
-        int cnt = 0;
-
-        bool left = false, right = false;
-
-        left = findTarget(root->left, target);
-        if(!left)
-            right = findTarget(root->right, target);
-
-        while(!q.empty()) {
-            int n = q.size();
-            
-            for(int i = 0; i < n; i++) {
-                TreeNode* t = q.front();
-                if(cnt == k)    ans.push_back(t->val);
-
-                if(t->left)     q.push(t->left);
-                if(t->right)    q.push(t->right);
-
-                q.pop();
-            }
-
-            cnt++;
-        }
-
-        for(int num : ans) 
-            cout << num << " ";
-        cout << endl;
+        findK(target, ans, k, 0);
 
         vector<TreeNode*> parents;
-        int dis = distanceTarget(root, target, parents);
-        dis--;
-
-        cout << endl << "Parents : " ;
-        for(auto i : parents)
-            cout << i -> val << " ";
-        cout<<endl;
-
-        cout << dis;
-        // if(k == dis)
-        //     ans.push_back(root->val);
-
-        if(!left && !right)
-            return ans;
-
+        distanceTarget(root, target, parents);
+        
         int n = parents.size();
         for(int i = n - 1; i >= 0; i--) {
             int level = k - (n - i); 
@@ -118,24 +73,11 @@ public:
                 findK(parents[i]->left, ans, k, n - i + 1);
             }
 
-        
             if(level == 0) {
                 ans.push_back(parents[i]->val);
                 break;
             }
         }
-
-        // if(k > dis) {
-            //stay in diff and find
-            // left ? findK(root->right, target->val, ans, k - dis, 1) : findK(root->left, target->val, ans, k - dis, 1);
-        // } else if(k == dis) {
-        //     left ? findK(root->right, target->val, ans, k - dis, 0) : findK(root->left, target->val, ans, k - dis, 0);
-        // } else {
-            //stay in the same leg
-            cout << "here";
-
-            // left ? findK(root->left, target->val, ans, dis - k, 1) : findK(root->right, target->val, ans, dis - k, 1);
-        // }
 
         return ans;
     }
