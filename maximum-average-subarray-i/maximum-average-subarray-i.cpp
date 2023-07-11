@@ -7,13 +7,13 @@ public:
             sum += nums[i];
         }
 
-        double maxi = sum / k;
+        double maxi = sum;
         
         for(int i = 1; i <= nums.size() - k; i++) {
             sum = sum - nums[i - 1] + nums[i + k - 1];
-            maxi = max(maxi, sum / k);
+            maxi = max(maxi, sum);
         }
 
-        return maxi;
+        return maxi / k;
     }
 };
