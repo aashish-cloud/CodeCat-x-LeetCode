@@ -16,25 +16,23 @@ public:
             }
         }
 
-        vector<int> vis(numCourses, 0);
         vector<int> ans;
         while(!q.empty()) {
-            int node = q.front();
-            vis[node] = 1;
-            ans.push_back(node);
+            int course = q.front();
+            ans.push_back(course);
 
-            for(auto it : graph[node]) {
-                inDegree[it]--;
+            for(auto nextCourse : graph[course]) {
+                inDegree[nextCourse]--;
 
-                if(inDegree[it] <= 0)
-                    q.push(it);
+                if(inDegree[nextCourse] == 0)
+                    q.push(nextCourse);
             }
 
             q.pop();
         }
 
-        for(auto isVisited : vis)
-            if(!isVisited)    return {};
+        for(auto i : inDegree)
+            if(i)    return {};
 
         return ans;
     }
