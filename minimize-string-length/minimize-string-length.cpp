@@ -1,10 +1,18 @@
 class Solution {
 public:
     int minimizedStringLength(string s) {
-        map<char, int> m;
-        for(char c : s)
-            m[c]++;
+        int count[26] = {0};
+        int n = s.size();
+        int ans = 0;
+
+        for(int i = 0; i < n; i++) {
+            count[s[i] - 'a']++;
+        }
+
+        for(int cnt : count)
+            if(cnt)
+                ans++;
         
-        return m.size();
+        return ans;
     }
 };
