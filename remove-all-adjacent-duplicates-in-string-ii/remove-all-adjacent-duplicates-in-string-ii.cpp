@@ -2,7 +2,7 @@ class Solution {
 public:
     string removeDuplicates(string s, int k) {
         stack<pair<char, int>> st;
-
+    
         for(int i = 0; i < s.size(); i++) {
             if(st.size() && s[i] == st.top().first)     st.top().second++;
             else    st.push({s[i], 1});
