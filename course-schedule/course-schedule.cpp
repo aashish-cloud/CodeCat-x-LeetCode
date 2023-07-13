@@ -11,7 +11,7 @@ public:
                 return true;
             }
         }
-        
+
         inStack[node] = 0;
         return false;
     } 
@@ -21,7 +21,7 @@ public:
         vector<vector<int>> graph(numCourses);
 
         for(int i = 0; i < prerequisites.size(); i++) {
-            graph[prerequisites[i][0]].push_back(prerequisites[i][1]);
+            graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
         }
 
         vector<int> vis(numCourses, 0), inStack(numCourses, 0);
