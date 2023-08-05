@@ -1,13 +1,20 @@
 class Solution {
 public:
     int distributeCandies(vector<int>& candyType) {
-        map<int, int> m;
-        for(auto c : candyType) m[c]++;
+        sort(candyType.begin(), candyType.end());
 
-        int canEat = candyType.size() / 2;
+        int type = 0;
+        int n = candyType.size();
+        
+        for(int i = 0; i < n; i++) {
+            while(i + 1 < n && candyType[i] == candyType[i + 1]) i++;
+            type++;
+        }
 
-        if(canEat > m.size())
-            return m.size();
+        int canEat = n / 2;
+
+        if(canEat > type)
+            return type;
         return canEat;
     }
 };
