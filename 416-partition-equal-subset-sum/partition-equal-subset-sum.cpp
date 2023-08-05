@@ -1,26 +1,36 @@
 class Solution {
 public:
-    int helper(int idx, int k, vector<int> &nums, vector<vector<int>> &dp) {
-        if(k == 0) return 1;
-        if(idx == nums.size())  return 0;
-
-        if(dp[idx][k] != -1)    return dp[idx][k];
-
-        if(k - nums[idx] >= 0)
-            if(helper(idx + 1, k - nums[idx], nums, dp))   return dp[idx][k] = 1;
-        if(helper(idx + 1, k, nums, dp))    return dp[idx][k] = 1;
-
-        return dp[idx][k] = 0;
-    }
-
     bool canPartition(vector<int>& nums) {
         int sum = 0;
-        
-        for(auto n : nums)  sum += n;
+        int n = nums.size();
+
+        for(auto i : nums)  sum += i;
         if(sum % 2 == 1)    return false;
         
         int k = sum / 2;
-        vector<vector<int>> dp(nums.size(), vector<int> (k + 1, -1));
-        return helper(0, k, nums, dp);
+        vector<vector<int>> dp(n, vector<int> (k + 1, -1));
+
+        dp[n - 1][0] = 1;
+        for(int j = 1; j <= k; j++)
+            if(nums[n - 1] - j == 0)    dp[n - 1][j] = 1;
+            else dp[n - 1][j] = 0;
+        
+        for(int i = n - 2; i >= 0; i--) {
+            for(int j = 0; j <= k; j++) {
+                if(j == 0) {
+                    dp[i][j] = 1;
+                    continue;
+                }
+
+                bool take = 0;
+                if(j - nums[i] >= 0)
+                    take = dp[i + 1][j - nums[i]];
+                bool notTake = dp[i + 1][j];
+
+                dp[i][j] = take | notTake;
+            }
+        }
+
+        return dp[0][k];
     }
 };
