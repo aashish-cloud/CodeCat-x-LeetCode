@@ -5,7 +5,7 @@ public:
         if(i == coins.size())   return dp[i][k] = INT_MAX;
 
         if(dp[i][k] != -1) {
-            return (long)dp[i][k] + cnt > INT_MAX ? INT_MAX : dp[i][k] + cnt;
+            return dp[i][k] == INT_MAX ? INT_MAX : dp[i][k] + cnt;
         }  
 
         int take = INT_MAX;
