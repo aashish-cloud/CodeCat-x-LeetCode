@@ -27,20 +27,18 @@ public:
         int ans = INT_MAX;
         for(int i = 0; i < sm_left.size(); i++) {
             int reqSum = goal - sm_left[i];
-            int lb = lower_bound(sm_right.begin(), sm_right.end(), reqSum) - sm_right.begin();
+            int it = lower_bound(sm_right.begin(), sm_right.end(), reqSum) - sm_right.begin();
             
-            if(lb>0)
-                ans=min(ans,abs(goal-sm_right[lb-1]-sm_left[i]));
-            if(lb<sm_right.size())
-                ans=min(ans,abs(goal-sm_right[lb]-sm_left[i]));
+            if(it > 0)
+                ans = min(ans, abs(goal - sm_left[i] - sm_right[it - 1]));
+            if(it < sm_right.size())
+                ans = min(ans, abs(goal - sm_left[i] - sm_right[it]));
 
-            // int closestValue = sm_left[i];
-            // if(it > 0)
-            //     closestValue += sm_right[it - 1];
+            // int closestValue;
+            // if(it < sm_right.size() && (sm_right[it] == reqSum || it == 0))
+            //     closestValue  = sm_left[i] + sm_right[it];
             // else
-            //     closestValue += sm_right[it];
-
-            // cout << reqSum << " : " << closestValue - sm_left[i] << endl;
+            //     closestValue  = sm_left[i] + sm_right[it - 1];
 
             // ans = min(ans, abs(goal - closestValue));
         }
