@@ -25,7 +25,6 @@ public:
         int cnt = 0;
         findPath(root, target, 0, cnt);
         total += cnt; 
-        // cout << root->val << " : " << total << endl;
         
         totPath(root->left, target, total);
         totPath(root->right, target, total);
