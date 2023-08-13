@@ -2,7 +2,7 @@ class Solution {
 public:
     int isValid(int i, vector<int>& nums, vector<int>& dp) {
         if(i == nums.size())    return dp[i] = 1;
-        if(i > nums.size())    return 0;
+        if(i > nums.size())    return dp[i] = 0;
 
         if(dp[i] != -1)     return dp[i];
 
@@ -20,7 +20,7 @@ public:
     }
 
     bool validPartition(vector<int>& nums) {
-        vector<int> dp(nums.size() + 2, -1);
+        vector<int> dp(nums.size() + 3, -1);
         return isValid(0, nums, dp);
     }
 };
