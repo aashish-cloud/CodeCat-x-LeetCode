@@ -26,6 +26,7 @@ public:
         }
 
         string str = "";
+        
         int j = 0;
         while(j < n - 1) {
             if(res[j] == res[j + 1])    return "";
